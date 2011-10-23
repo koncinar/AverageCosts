@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>CDI Demo</title>
+    <h:outputStylesheet name="screen.css"/>
+</h:head>
+<h:body>
+    <div id="container">
+        <div id="content">
+            <a href="index.jsf">index</a>
+            <h:form id="reg">
+                <h2>Register</h2>
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel for="id" value="Id:"/>
+                    <h:inputText value="#{newCostType.id}" id="id"/>
+                    <h:message for="id" errorClass="invalid"/>
+
+                    <h:outputLabel for="name" value="Name:"/>
+                    <h:inputText id="name" value="#{newCostType.name}"/>
+                    <h:message for="name" errorClass="invalid"/>
+
+                    <h:outputLabel for="description" value="Description:"/>
+                    <h:inputText id="description" value="#{newCostType.description}"/>
+                    <h:message for="description" errorClass="invalid"/>
+
+                    <h:outputText/>
+                    <h:commandButton action="#{costTypeCreation.saveCostType}" value="Shrani"/>
+                </h:panelGrid>
+            </h:form>
+
+            <h2>Cost types</h2>
+            <h:outputText rendered="#{empty costTypes}" value="No cost types."/>
+
+            <h:form rendered="#{not empty costTypes}">
+                <h:dataTable var="cost" value="#{costTypes}" styleClass="members">
+                    <h:column>
+                        <f:facet name="header">Id</f:facet> #{cost.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Name</f:facet> #{cost.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Description</f:facet> #{cost.description}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Parent</f:facet> #{cost.parent}
+                    </h:column>
+                    <!--<h:column>-->
+                        <!--<f:facet name="header">Delete</f:facet>-->
+                        <!--<h:commandLink value="Delete" action="#{memberRegistration.delete(memb)}"/>-->
+                    <!--</h:column>-->
+                </h:dataTable>
+            </h:form>
+        </div>
+        <div id="footer">
+            <h:graphicImage value="/resources/weld.png" alt="Weld logo"/>
+        </div>
+    </div>
+</h:body>
+</html>

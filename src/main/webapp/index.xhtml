@@ -1,11 +1,77 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>Hello World</title>
+    <title>CDI Demo</title>
+    <h:outputStylesheet name="screen.css"/>
 </h:head>
 <h:body>
-    Hello World!<br/>
-	If this page is not rendered correctly, you should open <a href="index.jsf">index.jsf</a>.<br/>
-	<h:outputText value="#{helloWorld.time}"/>
+    <div id="container">
+        <div id="content">
+            <a href="costTypes.jsf">cost types</a>
+            <h:form id="reg">
+                <h2>Register</h2>
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel for="name" value="Name:"/>
+                    <h:selectOneMenu value="#{newCost.costType}" id="name" converter="#{namedConverter}">
+                        <f:selectItems value="#{costTypes}" var="cost" itemLabel="#{cost.name}"/>
+                    </h:selectOneMenu>
+                    <h:message for="name" errorClass="invalid"/>
+
+                    <h:outputLabel for="email" value="Price:"/>
+                    <h:inputText id="email" value="#{newCost.price}">
+                        <f:convertNumber maxFractionDigits="2"/>
+                    </h:inputText>
+                    <h:message for="email" errorClass="invalid"/>
+
+                    <h:outputLabel for="phoneNumber" value="Affected people:"/>
+                    <h:inputText id="phoneNumber" value="#{newCost.affectedPeople}">
+                        <f:convertNumber maxFractionDigits="0"/>
+                    </h:inputText>
+                    <h:message for="phoneNumber" errorClass="invalid"/>
+
+                    <h:outputLabel for="comment" value="Comment:"/>
+                    <h:inputText id="comment" value="#{newCost.comment}"/>
+                    <h:message for="comment" errorClass="invalid"/>
+
+                    <h:outputText/>
+                    <h:commandButton action="#{costCreation.saveCost}" value="Save"/>
+                </h:panelGrid>
+            </h:form>
+
+            <h2>Members</h2>
+            <h:outputText rendered="#{empty costs}" value="No registered members."/>
+
+            <h:form rendered="#{not empty costs}">
+                <h:dataTable var="cost" value="#{costs}" styleClass="members">
+                    <h:column>
+                        <f:facet name="header">Id</f:facet> #{cost.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Cost type</f:facet> #{cost.costType.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Affected people</f:facet> #{cost.affectedPeople}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                        <h:outputText value="#{cost.price}">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="€"/>
+                        </h:outputText>
+                    </h:column>
+                    <!--<h:column>-->
+                        <!--<f:facet name="header">Delete</f:facet>-->
+                        <!--<h:commandLink value="Delete" action="#{memberRegistration.delete(cost)}"/>-->
+                    <!--</h:column>-->
+                </h:dataTable>
+            </h:form>
+            <h:outputText value="Povprecna poloznica: #{statisticsCalculator.getAverage(costs)}"/>
+            <br/>
+            <h:outputText value="Povprecna poloznica na osebo: #{statisticsCalculator.getAveragePerPerson(costs)}"/>
+        </div>
+        <div id="footer">
+            <h:graphicImage value="/resources/weld.png" alt="Weld logo"/>
+        </div>
+    </div>
 </h:body>
 </html>
