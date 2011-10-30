@@ -1,8 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>CDI Demo</title>
-    <h:outputStylesheet name="screen.css"/>
+    <title>Average costs</title>
 </h:head>
 <h:body>
     <div id="container">
@@ -13,8 +12,8 @@
                 <h:panelGrid columns="3">
 
                     <h:outputLabel for="name" value="Name:"/>
-                    <h:selectOneMenu value="#{newCost.costType}" id="name" converter="#{namedConverter}">
-                        <f:selectItems value="#{costTypes}" var="cost" itemLabel="#{cost.name}"/>
+                    <h:selectOneMenu value="#{newCost.costType}" id="name" converter="#{costTypeConverter}">
+                        <f:selectItems value="#{costTypePersistence.costTypes}" var="cost" itemLabel="#{cost.name}"/>
                     </h:selectOneMenu>
                     <h:message for="name" errorClass="invalid"/>
 
@@ -59,10 +58,10 @@
                             <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="€"/>
                         </h:outputText>
                     </h:column>
-                    <!--<h:column>-->
-                        <!--<f:facet name="header">Delete</f:facet>-->
-                        <!--<h:commandLink value="Delete" action="#{memberRegistration.delete(cost)}"/>-->
-                    <!--</h:column>-->
+                    <h:column>
+                        <f:facet name="header">Delete</f:facet>
+                        <h:commandLink value="Delete" action="#{costPersistence.deleteCost(cost)}"/>
+                    </h:column>
                 </h:dataTable>
             </h:form>
             <h:outputText value="Povprecna poloznica: #{statisticsCalculator.getAverage(costs)}"/>

@@ -89,4 +89,17 @@ public class Cost {
     public void setCreationData(CreationData creationData) {
         this.creationData = creationData;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return id.equals(((Cost) o).id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
