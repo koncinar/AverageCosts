@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <title>Average costs</title>
 </h:head>
@@ -39,37 +40,47 @@
             </h:form>
 
             <h2>Members</h2>
-            <h:outputText rendered="#{empty costs}" value="No registered members."/>
+            <h:outputText rendered="#{empty costPersistence.costs}" value="No registered members."/>
 
-            <h:form rendered="#{not empty costs}">
-                <h:dataTable var="cost" value="#{costs}" styleClass="members">
-                    <h:column>
-                        <f:facet name="header">Id</f:facet> #{cost.id}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Cost type</f:facet> #{cost.costType.name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Affected people</f:facet> #{cost.affectedPeople}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Price</f:facet>
-                        <h:outputText value="#{cost.price}">
-                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="€"/>
-                        </h:outputText>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Delete</f:facet>
-                        <h:commandLink value="Delete" action="#{costPersistence.deleteCost(cost)}"/>
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-            <h:outputText value="Povprecna poloznica: #{statisticsCalculator.getAverage(costs)}"/>
+            <div>
+                <h:form rendered="#{not empty costPersistence.costs}">
+                    <h:dataTable var="cost" value="#{costPersistence.costs}" styleClass="members">
+                        <h:column>
+                            <f:facet name="header">Id</f:facet> #{cost.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Cost type</f:facet> #{cost.costType.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Affected people</f:facet> #{cost.affectedPeople}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            <h:outputText value="#{cost.price}">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="€"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Delete</f:facet>
+                            <h:commandLink value="Delete" action="#{costPersistence.deleteCost(cost)}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+            <div>
+                <ul style="list-style: none;">
+                    <li>
+                        <h:outputText value="Število vpisanih položnic: #{costPersistence.numberOfCosts}"/>
+                    </li>
+                    <li>
+                        <h:outputText value="Povprecna položnica: #{statisticsCalculator.averageCost}"/>
+                    </li>
+                    <li>
+                        <h:outputText value="Povprecna položnica na osebo: #{statisticsCalculator.averagePerPerson}"/>
+                    </li>
+                </ul>
+            </div>
             <br/>
-            <h:outputText value="Povprecna poloznica na osebo: #{statisticsCalculator.getAveragePerPerson(costs)}"/>
-        </div>
-        <div id="footer">
-            <h:graphicImage value="/resources/weld.png" alt="Weld logo"/>
         </div>
     </div>
 </h:body>

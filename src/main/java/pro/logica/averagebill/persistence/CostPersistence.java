@@ -3,11 +3,10 @@ package pro.logica.averagebill.persistence;
 import pro.logica.averagebill.datamodel.Cost;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateful;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
+import javax.faces.bean.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -21,8 +20,9 @@ import java.util.List;
  * Date: 23.10.11
  * Time: 20:47
  */
-@Stateful
-@Model
+//@Stateful
+//@Model
+@ApplicationScoped
 @Named
 public class CostPersistence {
 
@@ -38,11 +38,15 @@ private EntityManager em;
         return costs;
     }
 
-    @PostConstruct
+    public int getNumberOfCosts() {
+        return costs == null ? 0 : costs.size();
+    }
+
     private void retrieveCosts(@Observes Cost cost) {
         retrieveCosts();
     }
 
+    @PostConstruct
     public void retrieveCosts() {
         Query query = em.createQuery("select c from Cost c order by c.creationData");
         costs = query.getResultList();
