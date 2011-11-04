@@ -102,4 +102,10 @@ public class Cost {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return String.format("Cost[id=%s; price=%s; costType=%s; affectedPeople=%s; comment='%s'; costDate=%s, user=%s, creationData=%s]",
+                id, price, costType, affectedPeople, comment, costDate, user, creationData);
+    }
 }
