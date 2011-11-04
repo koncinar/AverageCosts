@@ -1,0 +1,21 @@
+div {
+    background-color: #f0edec;
+    border: solid 1px gray;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+ul {
+    list-style: none;
+}
+
+table, td, th {
+    border:  1px solid black;
+}
+
+td {
+    padding-left: 3px;
+    padding-right: 3px;
+}

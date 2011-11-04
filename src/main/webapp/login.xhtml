@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: rok
+  Date: 2.11.11
+  Time: 18:37
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>Vpis</title>
+    <h:outputStylesheet name="css/basic.css"/>
+</h:head>
+
+<h:body>
+    <h:outputText rendered="#{not userSignIn.signedIn}" value="Niste vpisani."/>
+    <h:outputText rendered="#{userSignIn.signedIn}" value="Pozdravljeni, #{userSignIn.user.username}"/>
+    <h:form>
+        <h:outputLabel for="j_username" value="Up. ime:"/>
+        <h:inputText id="j_username" value="#{userSignIn.username}" required="true"/>
+        <h:message for="j_username"/>
+
+        <h:outputLabel for="j_password" value="Geslo:"/>
+        <h:inputSecret id="j_password" value="#{userSignIn.password}" required="true"/>
+        <h:message for="j_password"/>
+
+
+        <h:outputLabel for="nickname" value="Nickname:"/>
+        <h:inputText id="nickname" value="#{userSignIn.nickname}"/>
+        <h:message for="nickname"/>
+
+        <h:commandButton value="Sign in" action="#{userSignIn.signIn}"/>
+        <h:messages/>
+    </h:form>
+    <a href="index.jsf">index</a>
+    <a href="costTypes.jsf">cost types</a>
+</h:body>
+
+</html>

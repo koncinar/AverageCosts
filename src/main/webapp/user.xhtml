@@ -10,9 +10,8 @@
 
     <div id="container">
         <div id="content">
-            <h:link rendered="#{userSignIn.signedIn}" value="Moji stroški" outcome="user"/>
+            <a href="index.jsf">Prva stran</a>
             <a href="costTypes.jsf">Tipi stroškov</a>
-            <a href="login.jsf">register</a>
             <h:form id="reg">
                 <h2>Vpiši strošek</h2>
                 <ul>
@@ -68,12 +67,12 @@
                     </ui:repeat>
                 </ul>
             </div>
-            <h2>Vsi vnosi</h2>
-            <h:outputText rendered="#{empty costPersistence.costs}" value="Ni vnosov."/>
+            <h2>Moji vnosi</h2>
+            <h:outputText rendered="#{empty costPersistence.costsOfUser}" value="Ni vnosov."/>
 
             <div>
-                <h:form rendered="#{not empty costPersistence.costs}">
-                    <h:dataTable var="cost" value="#{costPersistence.costs}" styleClass="members">
+                <h:form rendered="#{not empty costPersistence.costsOfUser}">
+                    <h:dataTable var="cost" value="#{costPersistence.costsOfUser}" styleClass="members">
                         <h:column>
                             <f:facet name="header">Datum</f:facet>
                             <h:outputText value="#{cost.creationData.created}">
@@ -86,15 +85,19 @@
                         <h:column>
                             <f:facet name="header">Vpliva na</f:facet> #{cost.affectedPeople}
                         </h:column>
-                        <h:column>
-                            <f:facet
-                                    name="header">Avtor</f:facet> #{cost.user == null ? 'anonimno' : cost.user.displayName}
-                        </h:column>
+                        <!--<h:column>-->
+                            <!--<f:facet-->
+                                    <!--name="header">Avtor</f:facet> #{cost.user == null ? 'anonimno' : cost.user.displayName}-->
+                        <!--</h:column>-->
                         <h:column>
                             <f:facet name="header">Cena</f:facet>
                             <h:outputText value="#{cost.price}">
                                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2" currencySymbol="€"/>
                             </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Delete</f:facet>
+                            <h:commandLink value="Delete" action="#{costPersistence.deleteCost(cost)}"/>
                         </h:column>
                     </h:dataTable>
                 </h:form>

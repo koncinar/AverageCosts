@@ -2,6 +2,7 @@ package pro.logica.averagebill.persistence;
 
 import pro.logica.averagebill.datamodel.Cost;
 import pro.logica.averagebill.datamodel.CreationData;
+import pro.logica.averagebill.datamodel.User;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
@@ -28,6 +29,10 @@ public class CostCreation {
     private EntityManager em;
     @Inject
     private Event<Cost> costTypeEventSrc;
+    @Inject
+    @Named("user")
+    private User user;
+
     private Cost newCost;
 
     @PostConstruct
@@ -48,6 +53,9 @@ public class CostCreation {
 
     public void saveCost() {
         newCost.getCreationData().setCreated(new Date());
+        newCost.setUser(user);
+        System.out.println("Saving cost " + newCost +
+                " for user: " + user);
         em.persist(newCost);
         costTypeEventSrc.fire(newCost);
         initNewMember();

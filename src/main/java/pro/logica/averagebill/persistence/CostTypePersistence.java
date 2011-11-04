@@ -3,9 +3,9 @@ package pro.logica.averagebill.persistence;
 import pro.logica.averagebill.datamodel.CostType;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
-import javax.faces.bean.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
